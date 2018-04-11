@@ -10,6 +10,10 @@ This page describes newly identified limitations in the CockroachDB v2.0 release
 
 ## New Limitations
 
+### Replication factor for system ranges
+
+Changes to a cluster's default replication factor (`num_replicas`) are not automatically applied to the [replication zones for system ranges](configure-replication-zones.html#create-a-replication-zone-for-system-ranges). Therefore, if you increase the default replication factor, you must also increase the replication factor for system ranges to ensure that important "meta" information is as resilient as your data.
+
 ### Enterprise backup/restore during rolling upgrades
 
 In the upgrade process, after upgrading all binaries to v2.0, it's recommended to monitor the cluster's stability and performance for at least one day and only then finalize the upgrade by increasing the `version` cluster setting. However, in the window during which binaries are running v2.0 but the cluster version is still not increased, it is not possible to run enterprise [`BACKUP`](backup.html) and [`RESTORE`](restore.html) jobs.
