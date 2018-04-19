@@ -1,0 +1,74 @@
+<table>
+  <tr>
+    <th>
+      Column
+    </th>
+    <th>
+      Description
+    </th>
+  </tr>
+  <tr>
+    <td>
+      Metric Name
+    </td>
+    <td>
+      XXX
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Downsampleer
+    </td>
+    <td>
+      the operation used to combine different points
+      in the same series over time - we store one data point every ten
+      seconds, but for queries over long time spans the backend lowers
+      the resolution of the returned data, perhaps only returning one
+      data point for every minute, five minutes, or even an entire
+      hour in the case of the 30 day view the “Downsampler” operation
+      is used to combine the individual 10-second resolution
+      datapoints over the longer period into a single datapoint so for
+      instance, “AVG” returns the average value over the time period,
+      while “MAX” returns only the highest value seen
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Aggregator
+    </td>
+    <td>
+      is used to combine data points from different nodes
+      at the same time it has the same operations available as the
+      downsampler
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Rate
+    </td>
+    <td>
+      Has the following options:
+
+      <ul>
+        <li>
+          Normal: return the actual recorded value
+        </li>
+        <li>
+          Rate: the rate-of-change of the value per second
+        </li>
+        <li>
+          Non-negative Rate: returns the rate-of-change, but returns 0 instead of negative values a large number of the stats we track are actually tracked as monotonically increasing counter so each sample is just the total value of that counter and then the rate-of-change of that counter represents the rate of events being counted, which is usually what you want to graph “non-negative rate”  is needed because the counters are stored in memory, and thus if a node resets they go back to zero wheras normally they only increase
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Source
+    </td>
+    <td>
+      the set of nodes being queried, which is either the
+      entire Cluster or a single named node
+    </td>
+  </tr>
+</table>
